@@ -1,6 +1,5 @@
 import asyncio
 from stario import Stario
-from stario.datastar import Signal
 from stario.html import div, h1, h3, input_, button, span, p
 from stario.toys import toy_page
 
@@ -103,11 +102,10 @@ async def homepage():
 
 
 @app.command("/add_task")
-async def add_task(new_task: Signal[str]):
+async def add_task(new_task: str):
     """Neue Task zu Todo hinzufügen"""
-    task_text = str(new_task) if not hasattr(new_task, 'get') else new_task.get()
-    if task_text and task_text.strip():
-        tasks_db["todo"].append(task_text.strip())
+    if new_task and new_task.strip():
+        tasks_db["todo"].append(new_task.strip())
     
     # Board neu rendern
     columns_html = ""
@@ -117,7 +115,7 @@ async def add_task(new_task: Signal[str]):
     return div(
         # Notification
         div(
-            f"✅ Task '{task_text}' hinzugefügt!",
+            f"✅ Task '{new_task}' hinzugefügt!",
             {"style": "color: green; text-align: center; margin-bottom: 20px; padding: 10px; background: #d4edda; border-radius: 4px;"}
         ),
         # Aktualisiertes Board
