@@ -1,0 +1,29 @@
+# Render Blueprint Configuration
+# Diese Datei konfiguriert automatisch beide Services auf Render
+
+services:
+  # StarHTML Kanban Board
+  - type: web
+    name: kanban-starhtml
+    runtime: python
+    plan: free
+    rootDir: starhtml
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+    healthCheckPath: /
+
+  # Stario Kanban Board
+  - type: web
+    name: kanban-stario
+    runtime: python
+    plan: free
+    rootDir: stario
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+    healthCheckPath: /
