@@ -5,7 +5,7 @@ Basierend auf der neuen Handler-API
 
 from stario import Stario
 
-app = Stario()
+app = Stario(tracer=None)
 
 # In-Memory Task-Storage (für Demo)
 tasks_db = {
