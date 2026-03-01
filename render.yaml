@@ -1,9 +1,8 @@
 # Render Blueprint Configuration
 # Diese Datei konfiguriert automatisch beide Services auf Render
-# HINWEIS: StarHTML und Stario haben unterschiedliche Python-Anforderungen!
 
 services:
-  # StarHTML Kanban Board - funktioniert mit Python 3.13
+  # StarHTML Kanban Board
   - type: web
     name: kanban-starhtml
     runtime: python
@@ -13,10 +12,10 @@ services:
     startCommand: python app.py
     envVars:
       - key: PYTHON_VERSION
-        value: 3.13.0
+        value: 3.14.0
     healthCheckPath: /
 
-  # Stario Kanban Board - benoetigt Python 3.14
+  # Stario Kanban Board
   - type: web
     name: kanban-stario
     runtime: python
