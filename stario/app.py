@@ -1,6 +1,5 @@
 """
 Stario Kanban Board - vereinfachte Version für Stario v2
-Basierend auf der neuen Handler-API
 """
 
 from stario import Stario
@@ -62,7 +61,6 @@ def render_board():
     return columns_html
 
 
-@app.get("/")
 def homepage():
     """Hauptseite mit Kanban-Board"""
     board_html = render_board()
@@ -109,7 +107,10 @@ def homepage():
     '''
 
 
-@app.post("/add_task")
+# Routes registrieren
+app.get("/", homepage)
+
+
 def add_task(new_task: str):
     """Neue Task zu Todo hinzufügen"""
     if new_task and new_task.strip():
@@ -123,7 +124,9 @@ def add_task(new_task: str):
     '''
 
 
-@app.post("/move/{task}/{from_col}/{to_col}")
+app.post("/add_task", add_task)
+
+
 def move_task(task: str, from_col: str, to_col: str):
     """Task zwischen Spalten verschieben"""
     if task in tasks_db.get(from_col, []):
@@ -138,7 +141,9 @@ def move_task(task: str, from_col: str, to_col: str):
     '''
 
 
-@app.post("/delete/{task}/{col}")
+app.post("/move/{task}/{from_col}/{to_col}", move_task)
+
+
 def delete_task(task: str, col: str):
     """Task löschen"""
     if task in tasks_db.get(col, []):
@@ -150,6 +155,9 @@ def delete_task(task: str, col: str):
     <div id="notification" class="notification error">🗑️ {task} gelöscht!</div>
     <div id="board" class="board">{board_html}</div>
     '''
+
+
+app.post("/delete/{task}/{col}", delete_task)
 
 
 if __name__ == "__main__":
